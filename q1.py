@@ -1,6 +1,6 @@
 # funtions for Pink Floyd database
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import simpledialog 
 
 def get_albums():
     list = []
@@ -130,9 +130,14 @@ def get_song_name_by_word_in_lyrics():
                 line = line.split('::')
                 song_name = line[0]
             if '*' not in line and '#' not in line:
-                if word in line:
+                if word in line and song_name not in songs_list:
                     songs_list.append(song_name)
-    return songs_list
+    if len(songs_list) == 0:
+        output_label.config(text="No songs found")
+        return "No songs found"
+    else:
+        output_label.config(text="\n".join(songs_list))
+        return songs_list
 
 # GUI
 
@@ -146,6 +151,9 @@ button6 = tk.Button(root, text="Get Song by Word", command=get_song_by_word)
 button7 = tk.Button(root, text="Get Song Name by Word in Lyrics", command=get_song_name_by_word_in_lyrics)
 
 
+output_label = tk.Label(root, text="", bg="yellow", fg="black")
+
+
 button1.pack()
 button2.pack()
 button3.pack()
@@ -153,6 +161,6 @@ button4.pack()
 button5.pack()
 button6.pack()
 button7.pack()
-output_label = tk.Label(root, text="")
+
 output_label.pack()
 root.mainloop()
